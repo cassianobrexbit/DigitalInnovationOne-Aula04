@@ -22,26 +22,32 @@ Você pode descobrir isso digitando ```pwd``` em seu terminal
 
 ## Criando entidades da rede
 
-* É necessário agora criar os participantes em nossa rede. Como eles são participantes autorizados, precisamos fornecer a todos eles identificações exclusivas e seguras. O comando abaixo
+É necessário agora criar os participantes em nossa rede. Como eles são participantes autorizados, precisamos fornecer a todos eles identificações exclusivas e seguras. O comando abaixo
 executa a função.
 
 ```../bin/cryptogen generate --config=./crypto-config.yaml```
 
-* A seguinte resposta é esperada:
+A seguinte resposta é esperada:
 
 
  ![img1](https://miro.medium.com/max/223/1*-fWIivkBt1PNJmf6LWvPZg.png)
 
-* Execute os seguintes comandos
+Execute os seguintes comandos
 
 ```export FABRIC_CFG_PATH=$PWD```   
 ```../bin/configtxgen -profile TwoOrgsOrdererGenesis -outputBlock ./channel-artifacts/genesis.block```
 
-* A resposta é a seguinte
+A resposta é a seguinte
 
  ![img2](https://miro.medium.com/max/700/1*tjrs6d06rszMWm0kybM-EQ.png)
 
+Foram criados:   
+ - 2 organizações   
+ - 2 pares por organização   
+ - Certificados para cada um dos itens acima, de modo que cada transação pode ser assinada por eles e sabemos quem criou e assinou as transações   
+ - Bloco de gênese   
 
+Em seguida é necessário criar canais onde nossos pares possam interagir e criar transações. Chamaremos isso de ```mychannel``` , mas sinta-se à vontade para alterá-lo para o que quiser.
 
 
 
