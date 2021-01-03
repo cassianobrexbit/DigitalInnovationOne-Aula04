@@ -115,3 +115,14 @@ A resposta esperada é a seguinte
  
  * O chaincode é instanciado e, em seguida, são definidos saldos dos ativos. Foi definido como “a”, ou o primeiro par criado com saldo de 100 tokens, e “b”, o segundo par com saldo de 200 tokens.
 
+## Executando transações
+
+A rede Fabric foi colocada em funcionamento com alguns peers  com saldos iniciais de token. Com os comandos a seguir são realizadas transações de envio de tokens. Com o comando a seguir o saldo de um peer.
+
+```peer chaincode query -C $CHANNEL_NAME -n mycc -c '{"Args":["query","a"]}'```
+
+Resposta esperada:
+
+![img4](https://miro.medium.com/max/700/1*uaz_4dR7vP3Eu66F6GKj4A.png)
+
+
