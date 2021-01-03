@@ -29,8 +29,8 @@ executa a função.
 
 * A seguinte resposta é esperada:
 
-```org1.example.com```  
-```org2.example.com```
+
+ ![img1](https://miro.medium.com/max/223/1*-fWIivkBt1PNJmf6LWvPZg.png)
 
 * Execute os seguintes comandos
 
@@ -38,6 +38,8 @@ executa a função.
 ```../bin/configtxgen -profile TwoOrgsOrdererGenesis -outputBlock ./channel-artifacts/genesis.block```
 
 * A resposta é a seguinte
+
+ ![img2](https://miro.medium.com/max/700/1*tjrs6d06rszMWm0kybM-EQ.png)
 
 
 
