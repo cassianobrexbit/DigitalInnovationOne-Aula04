@@ -108,4 +108,10 @@ Baixar do repositório um chaincode pré-empacotado que o Fabric fornece e insta
 A resposta esperada é a seguinte
 
  ![img3](https://miro.medium.com/max/700/1*NFkhzjyGDqYumV2lqARpog.png)
+ 
+ Ações executadas
+ 
+ * Download do chaincode do Github
+ 
+ * O chaincode é instanciado e, em seguida, são definidos saldos dos ativos. Foi definido como “a”, ou o primeiro par criado com saldo de 100 tokens, e “b”, o segundo par com saldo de 200 tokens.
 
