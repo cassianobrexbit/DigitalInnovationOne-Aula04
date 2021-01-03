@@ -138,7 +138,7 @@ Em seguida, pode-se verificar novamente o saldo do peer "a" com o resultado 90.
 
 ## Conclusão
 
-Esse tutorial criou uma rede Hyperledger Fabric e a pôs em funcionamento, com um chaincode instalado nela e transações criadas entre pares.
+Com esse tutorial pode ser criada uma rede Hyperledger Fabric e posta em funcionamento, com um chaincode instalado e transações criadas entre pares.
 
 ## Referências
 
