@@ -32,4 +32,14 @@ executa a função.
 ```org1.example.com```  
 ```org2.example.com```
 
+* Execute os seguintes comandos
+
+```export FABRIC_CFG_PATH=$PWD```   
+```../bin/configtxgen -profile TwoOrgsOrdererGenesis -outputBlock ./channel-artifacts/genesis.block```
+
+* A resposta é a seguinte
+
+
+
+
 
