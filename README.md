@@ -11,6 +11,7 @@ Tutorial para desenvolvimento da parte prática da Aula 04.
 Em seguida, navegue até o diretório ```first-network``` a partir do qual trabalharemos com o comando ```cd``` abaixo.
 
 ```curl -sSL https://goo.gl/6wtTN5 | bash -s 1.1.0```  
+
 ```cd fabric-samples/first-network```
 
 
@@ -35,6 +36,7 @@ A seguinte resposta é esperada:
 Execute os seguintes comandos
 
 ```export FABRIC_CFG_PATH=$PWD```   
+
 ```../bin/configtxgen -profile TwoOrgsOrdererGenesis -outputBlock ./channel-artifacts/genesis.block```
 
 A resposta é a seguinte
@@ -49,5 +51,45 @@ Foram criados:
 
 Em seguida é necessário criar canais onde nossos pares possam interagir e criar transações. Chamaremos isso de ```mychannel``` , mas sinta-se à vontade para alterá-lo para o que quiser.
 
+```export CHANNEL_NAME=mychannel  && ../bin/configtxgen -profile TwoOrgsChannel -outputCreateChannelTx ./channel-artifacts/channel.tx -channelID $CHANNEL_NAME```   
 
+```../bin/configtxgen -profile TwoOrgsChannel -outputAnchorPeersUpdate ./channel-artifacts/Org1MSPanchors.tx -channelID $CHANNEL_NAME -asOrg Org1MSP```   
+
+```../bin/configtxgen -profile TwoOrgsChannel -outputAnchorPeersUpdate ./channel-artifacts/Org2MSPanchors.tx -channelID $CHANNEL_NAME -asOrg Org2MSP``` 
+
+As duas últimas linhas são importantes. Os pares âncora ```(anchor peers)``` são criados para que novos participantes que ingressam na rede possam conversar com ela e descobrir quem são os outros participantes do canal.
+
+## Iniciando a rede
+
+Utilize o comando do Docker para iniciar o container da rede
+
+```docker-compose -f docker-compose-cli.yaml up -d```   
+
+Esta é a resposta esperada
+
+ ![img3](https://miro.medium.com/max/700/1*mSRCEpE6TuZatz74XUTiYQ.png)
+ 
+ Configure a interface de linha de comando do Docker para executar os comandos de transação.
+ 
+ ```docker start cli```
+ 
+ Acessar o container docker
+ 
+ ```docker exec -it cli bash```
+ 
+ O passo seguinte é passar na configuração do canal criado anteriormente para que o container docker possa iniciar o canal.
+
+```export CHANNEL_NAME=mychannel```   
+
+```peer channel create -o orderer.example.com:7050 -c $CHANNEL_NAME -f ./channel-artifacts/channel.tx --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem```
+
+Adicionando peers ao canal
+
+```peer channel join -b mychannel.block```
+
+```CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org2.example.com/users/Admin@org2.example.com/msp CORE_PEER_ADDRESS=peer0.org2.example.com:7051 CORE_PEER_LOCALMSPID="Org2MSP" CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt peer channel join -b mychannel.block```
+
+```peer channel update -o orderer.example.com:7050 -c $CHANNEL_NAME -f ./channel-artifacts/Org1MSPanchors.tx --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem```
+
+```CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org2.example.com/users/Admin@org2.example.com/msp CORE_PEER_ADDRESS=peer0.org2.example.com:7051 CORE_PEER_LOCALMSPID="Org2MSP" CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt peer channel update -o orderer.example.com:7050 -c $CHANNEL_NAME -f ./channel-artifacts/Org2MSPanchors.tx --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem```
 
