@@ -93,3 +93,19 @@ Adicionando peers ao canal
 
 ```CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org2.example.com/users/Admin@org2.example.com/msp CORE_PEER_ADDRESS=peer0.org2.example.com:7051 CORE_PEER_LOCALMSPID="Org2MSP" CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt peer channel update -o orderer.example.com:7050 -c $CHANNEL_NAME -f ./channel-artifacts/Org2MSPanchors.tx --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem```
 
+Conectar o primeiro par de nossa primeira organização
+Conectar ao primeiro par de nossa segunda organização e atualizamos as variáveis de ambiente de acordo para reconhecê-lo
+Definidos esses dois pares como os pares âncora de cada organização para que novos pares possam conversar com eles e aprender sobre outros pares
+
+## Instalando o chaincode - Smart Contract
+
+Baixar do repositório um chaincode pré-empacotado que o Fabric fornece e instalá-lo na rede
+
+```peer chaincode install -n mycc -v 1.0 -p github.com/chaincode/chaincode_example02/go/```
+
+```peer chaincode instantiate -o orderer.example.com:7050 --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem -C $CHANNEL_NAME -n mycc -v 1.0 -c '{"Args":["init","a", "100", "b","200"]}' -P "OR ('Org1MSP.peer','Org2MSP.peer')"```
+
+A resposta esperada é a seguinte
+
+ ![img3](https://miro.medium.com/max/700/1*NFkhzjyGDqYumV2lqARpog.png)
+
