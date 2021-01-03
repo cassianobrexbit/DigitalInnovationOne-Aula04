@@ -125,4 +125,30 @@ Resposta esperada:
 
 ![img4](https://miro.medium.com/max/700/1*uaz_4dR7vP3Eu66F6GKj4A.png)
 
+O resultado é a confirmação de que o peer "a" possui o saldo de 100 tokens. O comando a seguir realiza o envio de 10 tokens do peer "a" para o peer "b".
+
+```peer chaincode invoke -o orderer.example.com:7050  --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem  -C $CHANNEL_NAME -n mycc -c '{"Args":["invoke","a","b","10"]}'```
+
+
+Em seguida, pode-se verificar novamente o saldo do peer "a" com o resultado 90.
+
+```peer chaincode query -C $CHANNEL_NAME -n mycc -c '{"Args":["query","a"]}'```
+
+![img5](https://miro.medium.com/max/700/1*4I14ed7veqyJmNfSCEf2Kw.png)
+
+## Conclusão
+
+Esse tutorial criou uma rede Hyperledger Fabric e a pôs em funcionamento, com um chaincode instalado nela e transações criadas entre pares.
+
+## Referências
+
+https://mycoralhealth.medium.com/start-your-own-hyperledger-blockchain-the-easy-way-5758cb4ed2d1
+https://hyperledger-fabric.readthedocs.io/pt/latest/whatis.html
+
+
+
+
+
+
+
 
